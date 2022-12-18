@@ -41,9 +41,14 @@ func forwardConnection(conn mcnet.Conn, handshake PacketHandshake) error {
 	if err != nil {
 		return err
 	}
+	defer remoteConn.Close()
 
 	// modify & send handshake packet
-	handshake.ServerAddress = strings.SplitN(*remote, ":", 2)[0]
+	if strings.Contains(handshake.ServerAddress, "\x00FML\x00") {
+		handshake.ServerAddress = strings.SplitN(*remote, ":", 2)[0] + "\u0000FML\u0000"
+	} else {
+		handshake.ServerAddress = strings.SplitN(*remote, ":", 2)[0]
+	}
 	port, err := strconv.Atoi(strings.SplitN(*remote, ":", 2)[1])
 	if err != nil {
 		log.Fatal("invalid port: ", *remote, err)

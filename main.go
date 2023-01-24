@@ -26,6 +26,7 @@ var (
 	description = flag.String("description", "", "server description")
 	favicon     = flag.String("favicon", "favicon.png", "server icon")
 	max         = flag.Int("max", 20, "max player")
+	socks5      = flag.String("socks5", "socks5.txt", "socks5 proxy")
 )
 
 func handleConnection(conn mcnet.Conn) error {
@@ -66,6 +67,11 @@ func main() {
 	}
 
 	log.Println("gomcproxy")
+
+	// load proxies
+	if *socks5 != "" {
+		loadProxies()
+	}
 
 	server, err := mcnet.ListenMC(*listen)
 	if err != nil {

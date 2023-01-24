@@ -16,7 +16,7 @@ import (
 
 // forward connection to real server
 func forwardConnection(conn mcnet.Conn, handshake PacketHandshake) error {
-	remoteConn, err := mcnet.DialMC(*remote)
+	remoteConn, err := dialMC()
 	if err != nil {
 		return err
 	}

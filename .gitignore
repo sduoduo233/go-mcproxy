@@ -1,3 +1,6 @@
 mcproxy
 .vscode
 __debug_bin
+socks5.txt
+mcproxy.exe
+./build

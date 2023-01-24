@@ -65,12 +65,15 @@ func dialMC() (*mcnet.Conn, error) {
 }
 
 func dialScosk5(addr string, proxyAddr string, username string, password string) (*mcnet.Conn, error) {
-	auth := proxy.Auth{
-		User:     username,
-		Password: password,
+	var auth *proxy.Auth = nil
+	if *socks5Username != "" && *socks5Password != "" {
+		auth = &proxy.Auth{
+			User:     username,
+			Password: password,
+		}
 	}
 
-	dialer, err := proxy.SOCKS5("tcp", proxyAddr, &auth, proxy.Direct)
+	dialer, err := proxy.SOCKS5("tcp", proxyAddr, auth, proxy.Direct)
 	if err != nil {
 		return nil, err
 	}

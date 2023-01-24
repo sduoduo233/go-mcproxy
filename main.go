@@ -19,14 +19,16 @@ var (
 )
 
 var (
-	listen      = flag.String("listen", "127.0.0.1:25565", "local listening address")
-	remote      = flag.String("remote", "mc.hypixel.net:25565", "remote forward address")
-	help        = flag.Bool("help", false, "print help message")
-	fakePing    = flag.Bool("fakeping", false, "fake ping")
-	description = flag.String("description", "", "server description")
-	favicon     = flag.String("favicon", "favicon.png", "server icon")
-	max         = flag.Int("max", 20, "max player")
-	socks5      = flag.String("socks5", "socks5.txt", "socks5 proxy")
+	listen         = flag.String("listen", "127.0.0.1:25565", "local listening address")
+	remote         = flag.String("remote", "mc.hypixel.net:25565", "remote forward address")
+	help           = flag.Bool("help", false, "print help message")
+	fakePing       = flag.Bool("fakeping", false, "fake ping")
+	description    = flag.String("description", "", "server description")
+	favicon        = flag.String("favicon", "favicon.png", "server icon")
+	max            = flag.Int("max", 20, "max player")
+	socks5         = flag.String("socks5", "socks5.txt", "socks5 proxy")
+	socks5Username = flag.String("socks5user", "", "socks5 username")
+	socks5Password = flag.String("socks5pass", "", "socks5 password")
 )
 
 func handleConnection(conn mcnet.Conn) error {

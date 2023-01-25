@@ -10,9 +10,7 @@ import (
 )
 
 type Socks5Proxy struct {
-	Address  string
-	Username string
-	Password string
+	Address string
 }
 
 var proxies = []Socks5Proxy{}
@@ -54,8 +52,9 @@ func dialMC() (*mcnet.Conn, error) {
 		// dial using proxy
 		log.Printf("connecting to %s using socks5 proxy %s", *remote, proxies[0].Address)
 
-		remoteConn, err := dialScosk5(*remote, proxies[0].Address, proxies[0].Username, proxies[0].Password)
+		p := proxies[0]
 		proxies = proxies[1:]
+		remoteConn, err := dialScosk5(*remote, p.Address)
 
 		if err != nil {
 			return nil, err
@@ -64,12 +63,12 @@ func dialMC() (*mcnet.Conn, error) {
 	}
 }
 
-func dialScosk5(addr string, proxyAddr string, username string, password string) (*mcnet.Conn, error) {
+func dialScosk5(addr string, proxyAddr string) (*mcnet.Conn, error) {
 	var auth *proxy.Auth = nil
 	if *socks5Username != "" && *socks5Password != "" {
 		auth = &proxy.Auth{
-			User:     username,
-			Password: password,
+			User:     *socks5Username,
+			Password: *socks5Password,
 		}
 	}
 

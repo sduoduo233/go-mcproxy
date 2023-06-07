@@ -1,0 +1,17 @@
+{
+    "listen": "0.0.0.0:25565",
+    "description": "hello\nworld",
+    "remote": "mc.hypixel.net:25565",
+    "max_player": 20,
+    "ping_mode": "fake",
+    "fake_ping": 0,
+    "rewrite_host": "mc.hypixel.net",
+    "rewrite_port": 25565,
+    "auth": "none",
+    "whitelist": [
+        "L1quidBounce"
+    ],
+    "blacklist": [
+
+    ]
+}

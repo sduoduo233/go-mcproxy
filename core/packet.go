@@ -38,6 +38,11 @@ func ReadPacket(r io.Reader) (Packet, error) {
 	}
 
 	payloadLen := int32(pktLength) - int32(n)
+
+	if payloadLen < 0 {
+		return Packet{}, fmt.Errorf("read packet: invalid payload length: %d", payloadLen)
+	}
+
 	packet := Packet{
 		ID:      int(pktID),
 		Payload: make([]byte, payloadLen),

@@ -7,32 +7,48 @@
 ## 参数说明
 ```
 Usage of ./mcproxy:
-  -description string
-        server description
-  -fakeping
-        fake ping
-  -favicon string
-        server icon (default "favicon.png")
-  -help
-        print help message
-  -listen string
-        local listening address (default "127.0.0.1:25565")
-  -max int
-        max player (default 20)
-  -remote string
-        remote forward address (default "mc.hypixel.net:25565")
+  -config string
+        path to config.json (default "config.json")
 ```
-- description: 服务器的描述，不指定代表使用原服务器的
-- fakeping：假延迟
-- listen: 本地监听的端口
-- remote：原服务器的地址
-- favicon: 服务器图标，必须是png格式，大小64x64
+
+`-config` 配置文件路径
+
+## 配置文件说明
  
-## 用户认证
-相关函数在`auth.go`中，默认允许所有人加入
-```
-func allowJoin(username string) (bool, string) {
-	return true, "You are not whitelisted."
+```json
+
+{
+    "listen": "0.0.0.0:25565",
+    "description": "hello\nworld",
+    "remote": "mc.hypixel.net:25565",
+    "max_player": 20,
+    "ping_mode": "fake",
+    "fake_ping": 0,
+    "rewrite_host": "mc.hypixel.net",
+    "rewrite_port": 25565,
+    "auth": "none",
+    "whitelist": [
+        "L1quidBounce"
+    ],
+    "blacklist": [
+
+    ]
 }
+
 ```
-第一个返回值代表是否允许用户加入，第二个是不允许加入的原因
+
+`listen`: 服务器监听地址
+
+`description`: MOTD
+
+`remote`: 反向代理的源服务器
+
+`max_player`: 最大玩家
+
+`ping_mode`: 相应 ping 的方法，可以是 `real`（真实延迟），或 `fake`（假延迟）
+
+`rewrite_host`：修改客户端发送的服务器地址（可以用来绕过 Hypixel 的地址检测）
+
+`rewrite_port`：修改客户端发送的服务器端口
+
+`auth`：用户名认证，可以是 `none`, `blacklist` 或 `whitelist`

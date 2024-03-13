@@ -59,14 +59,14 @@ func handler(conn net.Conn) {
 	switch nextState {
 	case 1: // status
 
-		err := handlePing(reader, conn)
+		err := handlePing(reader, conn, int(protocol))
 		if err != nil {
 			log.Println("handle ping error:", err)
 		}
 
 	case 2: // login
 
-		if protocol != VERSION_1_8_9 {
+		if protocol < VERSION_1_8_9 {
 			err := sendDisconnect(conn, "unsupported client version")
 			if err != nil {
 				log.Println("disconnect error:", err)
@@ -83,7 +83,7 @@ func handler(conn net.Conn) {
 			return
 		}
 
-		err := handleForward(reader, conn, strings.HasSuffix(string(address), "\x00FML\x00"))
+		err := handleForward(reader, conn, strings.HasSuffix(string(address), "\x00FML\x00"), int(protocol))
 		if err != nil {
 			log.Println("handle forward error:", err)
 		}

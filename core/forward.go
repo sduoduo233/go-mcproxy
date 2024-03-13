@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-func handleForward(reader io.Reader, writer io.Writer, fml bool) error {
+func handleForward(reader io.Reader, writer io.Writer, fml bool, protocol int) error {
 	onlineCount.Add(1)
 	defer onlineCount.Add(-1)
 
@@ -59,7 +59,7 @@ func handleForward(reader io.Reader, writer io.Writer, fml bool) error {
 	}
 
 	pktHandshake, err := Pack(
-		VarInt(VERSION_1_8_9),
+		VarInt(protocol),
 		String(rewriteHost),
 		UShort(cfg.RewirtePort),
 		VarInt(2), // next state login

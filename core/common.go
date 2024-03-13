@@ -8,6 +8,7 @@ import (
 )
 
 const VERSION_1_8_9 = 47
+const VERSION_1_18_2 = 758
 
 var onlineCount atomic.Int32
 
@@ -51,11 +52,11 @@ type statusResponse struct {
 }
 
 // write ping response packet
-func sendResponse(w io.Writer) error {
+func sendResponse(w io.Writer, protocol int) error {
 	resp, err := json.Marshal(statusResponse{
 		Version: statusVersion{
-			Name:     "1.8.9",
-			Protocol: VERSION_1_8_9,
+			Name:     "gomcproxy",
+			Protocol: protocol,
 		},
 		Players: statusPlayers{
 			Max:    cfg.MaxPlayer,

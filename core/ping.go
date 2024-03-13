@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func handlePing(reader io.Reader, writer io.Writer) error {
+func handlePing(reader io.Reader, writer io.Writer, protocol int) error {
 
 	// request
 	pkt, err := ReadPacket(reader)
@@ -19,7 +19,7 @@ func handlePing(reader io.Reader, writer io.Writer) error {
 	}
 
 	// response
-	err = sendResponse(writer)
+	err = sendResponse(writer, protocol)
 	if err != nil {
 		return err
 	}

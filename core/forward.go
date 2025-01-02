@@ -73,12 +73,11 @@ func handleForward(reader io.Reader, writer io.Writer, fml bool, protocol int) e
 	}
 
 	// write login start
-	pktLoginStart, err := Pack(
-		String(username),
-	)
-	if err != nil {
-		return fmt.Errorf("pack login start: %w", err)
-	}
+
+	// the payload of login start varies between verions
+	// so we just copy the payload
+
+	pktLoginStart := pkt.Payload
 	err = WritePacket(0x00, pktLoginStart, remote)
 	if err != nil {
 		return fmt.Errorf("write login start: %w", err)

@@ -11,7 +11,7 @@ type Packet struct {
 	Payload []byte
 }
 
-const maxPacketLength = 256
+const maxPacketLength = 4096
 
 func ReadPacket(r io.Reader) (Packet, error) {
 	var pktLength, pktID VarInt
